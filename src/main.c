@@ -1,20 +1,28 @@
 #include "../philo.h"
 
-void *test(void *arg)
+void *smth()
 {
-	usleep(100000);
-	printf("Just testing thread\n");
-	usleep(100000);
+	int i = 0;
+	while (i < 10)
+	{
+		printf("thread ID = %d   smth\n", getpid());
+		i++;
+		usleep(1000);
+	}
 	return (NULL);
 }
 
 int main()
 {
-	pthread_t thread_id;
+	int i = 0;
+	pthread_t t1;
 
-	// char *str1 = "1_1_1_1_1_1";
-	// char *str2 = "2_2_2_2_2_2";
-
-	pthread_create(&thread_id, NULL, test, NULL);
-	pthread_join(thread_id, NULL);
+	pthread_create(&t1, NULL, smth, NULL);
+	while (i < 10)
+	{
+		printf("thread ID = %d  main\n", getpid());
+		usleep(1000);
+		i++;
+	}
+	// pthread_join(t1, NULL);
 }
