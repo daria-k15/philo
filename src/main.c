@@ -1,28 +1,29 @@
 #include "../philo.h"
 
-void *smth()
+int input_init(t_input *input, int argc, char **argv)
 {
-	int i = 0;
-	while (i < 10)
-	{
-		printf("thread ID = %d   smth\n", getpid());
-		i++;
-		usleep(1000);
-	}
-	return (NULL);
+	input->philo_count = ft_atoi(argv[1]);
+	input->time_to_die = ft_atoi(argv[2]);
+	input->time_to_eat = ft_atoi(argv[3]);
+	input->time_to_sleep = ft_atoi(argv[4]);
+	if (argc == 6)
+		input->eating_sum = ft_atoi(argv[5]);
+	else
+		input->eating_sum = 0;
+	return (1);
 }
 
-int main()
+int main(int argc, char **argv)
 {
-	int i = 0;
-	pthread_t t1;
+	t_all *all;
+	if (argc != 5 && argc != 6)
+		return (printf("Wrong number of arguments!\n"));
+	all = (t_all *)malloc(sizeof(t_all));
+	if (!all)
+		return (printf("Error in memory allocation!\n"));
+	all->input = (t_input *)malloc(sizeof(t_input));
+	if (!all->input)
+		return (printf("Error in memory allocation\n"));
+	input_init(all->input, argc, argv);
 
-	pthread_create(&t1, NULL, smth, NULL);
-	while (i < 10)
-	{
-		printf("thread ID = %d  main\n", getpid());
-		usleep(1000);
-		i++;
-	}
-	// pthread_join(t1, NULL);
 }
