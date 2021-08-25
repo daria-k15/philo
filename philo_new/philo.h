@@ -15,31 +15,31 @@
 
 typedef struct s_input
 {
-	int				philo_count;
+	int				num_of_philo;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int				eating_sum;
-	int				death_flag;
-	int				end_eat;
-	pthread_mutex_t	*locking;
+	int				eat_sum;
 }					t_input;
 
 typedef struct s_philo
 {
 	int				philo_num;
-	int				limit;
+	int				start_to_eat;
+	int				need_to_eat;
+	int				death_flag;
+	int				end_to_eat;
+	int				max_eat;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*print_lock;
-	t_input			*input;
-	int				start_time;
-	int				need_to_eat;	
+	pthread_mutex_t	*lock_even_odd;
 }					t_philo;
 
 typedef struct s_all
 {
 	int				philo_count;
+	int				start_time;
 	t_philo			*philo;
 	t_input			*input;
 	pthread_t		*thread;
@@ -49,5 +49,6 @@ typedef struct s_all
 
 int	ft_atoi(const char *str);
 int	get_time(void);
+int get_work_time(t_all *all);
 
 #endif

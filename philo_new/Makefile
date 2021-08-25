@@ -8,6 +8,7 @@ HEADER = philo.h
 SRC_L = main.c \
 		ft_atoi.c \
 		utils.c
+		
 SRC_DIR = src/
 SRC = $(addprefix $(SRC_DIR), $(SRC_L))
 
