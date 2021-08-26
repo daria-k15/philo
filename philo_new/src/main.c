@@ -1,6 +1,5 @@
 #include "../philo.h"
 
-
 int forks_init(t_all *all)
 {
 	int i;
@@ -38,7 +37,7 @@ int philo_init(t_all *all)
 		return (printf("Error in memory allocation!\n"));
 	while(i < all->philo_count)
 	{
-		all->philo[i].philo_num = i;
+		all->philo[i].philo_index = i;
 		all->philo[i].start_to_eat = get_time();
 		all->philo[i].need_to_eat = all->input->eat_sum;
 		all->philo[i].death_flag = 0;
@@ -64,23 +63,42 @@ int input_init(t_all *all, int argc, char **argv)
 	if (argc == 6)
 		all->input->eat_sum = ft_atoi(argv[5]);
 	else
-		all->input->eat_sum = 0;
+		all->input->eat_sum = -1;
 	all->philo_count = all->input->num_of_philo;
-	all->start_time = 0;
 	forks_init(all);
 	philo_init(all);
 	return (0);
 }
 
-void *thread_create(void *thread)
+
+void eat_fun(t_philo *philo)
+{
+	pthread_mutex_lock(philo->right_fork);
+	if (philo->death_flag == 1)
+	{
+		pthread_mutex_unlock(philo->right_fork);
+		return ;
+	}
+	pthread_mutex_lock(philo->print_lock);
+	printf("%d %d has taken a fork\n", get_work_time(philo->start_time), philo->philo_index);
+	pthread_mutex_unlock(philo->print_lock);
+}
+
+void *thread_create(t_philo *philo)
 {
 	// t_philo *philo;
-	static int i;
-	thread = 0;
-	// i = 0;
-	// while (i < philo->philo_num)
-	printf("thread number = %d\n", i++);
-	return (0);	
+	
+	// philo = (t_philo *)thread;
+	printf("death flag = %d\n", philo->death_flag);
+	printf("death flag = %d\n", philo->need_to_eat);
+	if (philo->philo_index % 2 == 0)
+		usleep(200);
+	while (philo->death_flag != 1 && philo->need_to_eat != 0)
+	{
+		printf("check\n");
+		eat_fun(philo);
+	}
+	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -99,17 +117,18 @@ int	main(int argc, char **argv)
 		return (printf("Error in memory allocation!\n"));
 	input_init(all, argc, argv);
 	// printf("philo num = %d\n", all->philo_count);
-	all->start_time = get_time();
+	all->philo->start_time = get_time();
+	// printf("start time = %ld\n", all->philo->start_time);
 	all->philo->death_flag = 0;
 	while (i < all->philo_count)
 	{
-		pthread_create(&(all->thread[i]), NULL, thread_create, (void *)&(all->philo[i]));
+		pthread_create(&(all->thread[i]), NULL, (void *)thread_create, (void *)&(all->philo[i]));
 		i++;
 	}
-	i = 0;
-	while (i < all->philo_count)
-	{
-		pthread_join((all->thread[i]), NULL);
-		i++;
-	}
+	// i = 0;
+	// while (i < all->philo_count)
+	// {
+	// 	pthread_join((all->thread[i]), NULL);
+	// 	i++;
+	// }
 }

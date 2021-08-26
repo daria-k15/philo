@@ -3,19 +3,19 @@
 int	get_time(void)
 {
 	struct timeval	curr_time;
-	int				res;
+	// long		res;
 
 	gettimeofday(&curr_time, NULL);
-	res = curr_time.tv_sec * 1000 + curr_time.tv_usec / 1000;
-	return (res);  
+	// curr_time.tv_sec * 1000LL + curr_time.tv_usec / 1000;
+	return (curr_time.tv_sec * 1000 + curr_time.tv_usec / 1000);  
 }
 
-int get_work_time(t_all *all)
+int	get_work_time(int time)
 {
-	struct timeval	curr_time;
-	int				res;
+	struct timeval	output_time;
+	// long		res;
 
-	gettimeofday(&curr_time, NULL);
-	res = curr_time.tv_sec * 1000 + curr_time.tv_usec / 1000;
-	return (all->start_time - res);
+	gettimeofday(&output_time, NULL);
+	// res = output_time.tv_sec * 1000LL + output_time.tv_usec / 1000;
+	return ((output_time.tv_sec * 1000 + output_time.tv_usec / 1000) - time);
 }

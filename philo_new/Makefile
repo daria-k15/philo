@@ -1,7 +1,7 @@
 NAME = philo
 
 CC = gcc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror 
 
 HEADER = philo.h
 

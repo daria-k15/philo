@@ -24,12 +24,13 @@ typedef struct s_input
 
 typedef struct s_philo
 {
-	int				philo_num;
-	int				start_to_eat;
+	int				philo_index;
+	long			start_to_eat;
 	int				need_to_eat;
 	int				death_flag;
 	int				end_to_eat;
 	int				max_eat;
+	int			start_time;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*print_lock;
@@ -39,7 +40,6 @@ typedef struct s_philo
 typedef struct s_all
 {
 	int				philo_count;
-	int				start_time;
 	t_philo			*philo;
 	t_input			*input;
 	pthread_t		*thread;
@@ -49,6 +49,6 @@ typedef struct s_all
 
 int	ft_atoi(const char *str);
 int	get_time(void);
-int get_work_time(t_all *all);
+int	get_work_time(int time);
 
 #endif
