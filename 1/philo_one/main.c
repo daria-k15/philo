@@ -109,6 +109,7 @@ int		main(int argc, char **argv)
 	if (!(data->philos = init_philos(data)))
 		return (error(ER_MALLOC));
 	data->start_time = time_now();
+	// printf("time = %d\n",  data->start_time);
 	data->num_to_eat = -1;
 	if (argc == 6)
 		data->num_to_eat = ft_atoi(argv[5]);

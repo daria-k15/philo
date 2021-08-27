@@ -13,37 +13,40 @@
 # define THINK	3
 # define DIE	4
 
-typedef struct s_input
+typedef struct s_forks
+{
+	pthread_mutex_t	*fork_mutex;
+	int				last_touch;
+}					t_forks;
+
+
+typedef struct s_philo
+{
+	int				philo_index;
+	int				philo_count;
+	int				start_to_eat;
+	int				need_to_eat;
+	int				death_flag;
+	int				end_to_eat;
+	int				max_eat;
+	t_forks			*left_fork;
+	t_forks			*right_fork;
+	pthread_t		*thread;
+}					t_philo;
+
+typedef struct s_all
 {
 	int				num_of_philo;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				eat_sum;
-}					t_input;
-
-typedef struct s_philo
-{
-	int				philo_index;
-	long			start_to_eat;
-	int				need_to_eat;
-	int				death_flag;
-	int				end_to_eat;
-	int				max_eat;
-	int			start_time;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
-	pthread_mutex_t	*print_lock;
-	pthread_mutex_t	*lock_even_odd;
-}					t_philo;
-
-typedef struct s_all
-{
+	int				start_time;
 	int				philo_count;
 	t_philo			*philo;
-	t_input			*input;
-	pthread_t		*thread;
-	pthread_mutex_t	**forks;
+	t_forks			*forks;
+	pthread_mutex_t	*print_lock;
+	pthread_mutex_t	*die_lock;
 }					t_all;
 
 

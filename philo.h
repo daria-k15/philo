@@ -28,18 +28,19 @@ typedef struct s_input
 typedef struct s_philo
 {
 	int				philo_num;
-	int				limit;
+	int				max_eat;
+	int				eat_start_time;
+	int				need_to_eat;	
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*print_lock;
 	t_input			*input;
-	int				start_time;
-	int				need_to_eat;	
 }					t_philo;
 
 typedef struct s_all
 {
 	int				philo_count;
+	int				start_time;
 	t_philo			*philo;
 	t_input			*input;
 	pthread_t		*thread;
@@ -49,5 +50,6 @@ typedef struct s_all
 
 int	ft_atoi(const char *str);
 int	get_time(void);
-
+int init_forks(t_all *all);
+int	philo_init(t_all *all);
 #endif

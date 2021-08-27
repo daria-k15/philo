@@ -5,7 +5,7 @@ FLAGS = -Wall -Wextra -Werror
 
 HEADER = philo.h
 
-SRC_L = main.c \
+SRC_L = philo.c \
 		ft_atoi.c \
 		utils.c
 		
