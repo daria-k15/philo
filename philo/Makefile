@@ -1,14 +1,14 @@
 NAME = philo
 
 CC = gcc
-FLAGS = -Wall -Wextra -Werror 
+FLAGS = -Wall -Wextra -Werror
 
 HEADER = philo.h
 
-SRC_L = philo.c \
-		ft_atoi.c \
-		utils.c
-		
+SRC_L = main.c \
+		utils.c \
+		inits.c \
+		actions.c
 SRC_DIR = src/
 SRC = $(addprefix $(SRC_DIR), $(SRC_L))
 
@@ -24,13 +24,13 @@ RESET = \033[0m
 all: $(NAME)
 
 $(NAME): $(OBJ) $(HEADER) 
-	@$(CC) $(FLAGS) $(OBJ) -o $(NAME)
+	@$(CC) $(FLAGS) $(OBJ) -o $(NAME) -lpthread
 	@echo "\n$(NAME): $(GREEN)object files were created$(RESET)"
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c $(HEADER)
 	@mkdir -p $(OBJ_DIR)
 	@$(CC) $(FLAGS) -c $(INCLUDES) $< -o $@
-	@echo "$(NAME): $(GREEN)$(OBJECTS_DIRECTORY) was created$(RESET)"
+	@echo "$(NAME): $(GREEN)$(OBJ_DIR) was created$(RESET)"
 
 
 clean:
